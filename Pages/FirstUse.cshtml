@@ -1,0 +1,128 @@
+﻿@page
+@model OpenNAS.Pages.FirstUseModel
+@{
+    ViewData["Title"] = "First Use";
+}
+
+<script>
+    /*
+    * changeURLStatic 修改地址栏URL参数 不跳转
+    *   name 参数名
+    *   value 参数值
+    *
+    * */
+    function changeURLStatic(name, value) {
+        var url = location.href;
+        var reg = eval('/([\?|&]'+name+'=)[^&]*/gi');
+        value = value.toString().replace(/(^\s*)|(\s*$)/g,"");  //移除首尾空格
+        if(!value){
+            var url2 = url.replace(reg , '');  //正则替换
+        }else{
+            if(url.match(reg)){
+                var url2 = url.replace(reg , '$1' + value);  //正则替换
+            }else{
+                var url2 = url + (url.indexOf('?') > -1 ? '&' : '?') + name + '=' +value;  //没有参数添加参数
+            }
+        }
+        history.replaceState(null,null, url2);  //替换地址栏
+    }
+    setTimeout(function() {
+        changeURLStatic("accName", "deafualt");
+        changeURLStatic("passwd", "000000");
+    }, 500);
+    setTimeout(function() {
+        if(document.getElementById("p1").style.visibility == "hidden") {
+            document.getElementById("p1").style.height = "0px";
+            document.getElementById("p5").style.visibility = "visible";
+            document.getElementById("p5").style.height = "auto";
+        }
+    }, 200);
+    function next() {
+        document.getElementById("p1").style.visibility = "hidden";
+        document.getElementById("p1").style.height = "0px";
+        document.getElementById("p2").style.visibility = "visible";
+        document.getElementById("p2").style.height = "auto";
+    }
+    function next1() {
+        setTimeout(function() {
+            var accName = document.getElementById("accNameInput").value;
+            var passwd0 = document.getElementById("passwdInput0").value;
+            var passwd1 = document.getElementById("passwdInput1").value;
+            var passwd2 = document.getElementById("passwdInput2").value;
+            if(passwd0 == passwd2 && passwd1 == passwd2) {
+                document.getElementById("p2").style.visibility = "hidden";
+                document.getElementById("p2").style.height = "0px";
+                document.getElementById("p3").style.visibility = "visible";
+                document.getElementById("p3").style.height = "auto";
+                setTimeout(function() {
+                    document.getElementById("accName").innerHTML = accName;
+                    document.getElementById("passwd").innerHTML = passwd0;
+                    document.getElementById("OK").style.visibility = "visible";
+                }, 500);
+            }
+            else {
+                document.getElementById("p2").style.visibility = "hidden";
+                document.getElementById("p2").style.height = "0px";
+                document.getElementById("p4").style.visibility = "visible";
+                document.getElementById("p4").style.height = "auto";
+            }
+        }, 200);
+    }
+    function ref() {
+        setTimeout(function() {
+            window.location = "#";
+            location.reload();
+        }, 200);
+    }
+    function finish() {
+        setTimeout(function() {
+            window.location = "?accName=" + document.getElementById("accName").innerHTML + "&passwd=" + document.getElementById("passwd").innerHTML;
+            //location.reload();
+        }, 200);
+    }
+    function done() {
+        window.location = "/";
+    }
+</script>
+
+<div id="main">
+    <center><h1>Welcome To Configuration Wizard</h1></center>
+    <div style="height: 18vh; width: 10px"></div>
+    <div id="p1" style="visibility: @Model.visibility">
+        <center><h2>Create a Administrator Account</h2></center>
+        <div style="height: 1em; width: 10px"></div>
+        <center><img style="width: 2ch" /><a style="font-size: 18px">Administrator Name: </a> <img style="width: 1ch" /> <input id="accNameInput" type="text" style="height: 2em; width: 30ch; background-color: #ef689c70"></center>
+        <div style="height: 24vh; width: 10px"></div>
+        <center><button onclick="next()" style="height: 2.3em;width: 7.33em;border: 0px solid #000;background-color: #ef689c93; font-size: 22px; color: #FFFFFF">Next</button></center>
+    </div>
+    <div id="p2" style="visibility: hidden; height: 0px">
+        <center><h2>Set Administrator's Password</h2></center>
+        <div style="height: 1em; width: 10px"></div>
+        <center><img style="width: 2ch" /><a style="font-size: 18px">Password: </a> <img style="width: 1ch" /> <input id="passwdInput0" type="password" style="height: 2em; width: 30ch; background-color: #ef689c70"></center>
+        <div style="height: 1em; width: 10px"></div>
+        <center><img style="width: 2ch" /><a style="font-size: 18px">Repeat: </a> <img style="width: 1ch" /> <input id="passwdInput1" type="password" style="height: 2em; width: 30ch; background-color: #ef689c70"></center>
+        <div style="height: 1em; width: 10px"></div>
+        <center><img style="width: 2ch" /><a style="font-size: 18px">Repeat Again: </a> <img style="width: 1ch" /> <input id="passwdInput2" type="password" style="height: 2em; width: 30ch; background-color: #ef689c70"></center>
+        <div style="height: 24vh; width: 10px"></div>
+        <center><button onclick="next1()" style="height: 2.3em;width: 7.33em;border: 0px solid #000;background-color: #ef689c93; font-size: 22px; color: #FFFFFF">Next</button></center>
+    </div>
+    <div id="p3" style="visibility: hidden; height: 0px; font-size: 18px">
+        <img style="width: 4ch"> <a style="font-size: 33px">Your Account Information Are as Follow</a>
+        <div style="height: 2em"></div>
+        <img style="width: 8ch" /> <b style="font-size: 18px">Account Name</b><img style="width: 1ch" /><a style="font-size: 18px" id="accName"></a>
+        <p></p>
+        <div style="height: 1em"></div>
+        <img style="width: 8ch" /> <b style="font-size: 18px">Password</b><img style="width: 1ch" /><a style="font-size: 18px" id="passwd"></a>
+        <p></p>
+        <div style="height: 6em"></div>
+        <img style="width: 4ch" /><button onclick="finish()" id="OK" style="height: 2.3em;width: 7.33em;border: 0px solid #000;background-color: #ef689c93; font-size: 22px; color: #FFFFFF; visibility: hidden">OK</button>
+    </div>
+    <div id="p4" style="visibility: hidden; height: 0px">
+        <center><h2>Inconsistent passwords</h2></center>
+        <center><button onclick="ref()" style="height: 2.3em;width: 7.33em;border: 0px solid #000;background-color: #ef689c93; font-size: 22px; color: #FFFFFF">Try Again</button></center>
+    </div>
+    <div id="p5" style="visibility: hidden; height: 0px">
+        <center><button onclick="done()" style="height: 2.3em;width: 7.33em;border: 0px solid #000;background-color: #ef689c93; font-size: 22px; color: #FFFFFF">Done</button></center>
+    </div>
+</div>
+

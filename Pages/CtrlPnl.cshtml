@@ -1,0 +1,86 @@
+﻿@page
+@model OpenNAS.Pages.CtrlPnlModel
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - OpenNAS</title>
+    <!--<link rel="manifest" href="~/manifest.webmanifest">-->
+    <script src="js/localforage.min.js"></script>
+    <style>
+        body {
+            color: #333;
+        }
+        .lightBlack {
+            color: #444;
+        }
+        .alpharedbackground {
+            background-color: #E2919B93
+        }
+        .alphalightbackground {
+            background-color: #FFFFFF70
+        }
+    </style>
+</head>
+<body style='
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;
+'>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <div style="height: 20px"></div>
+            <div style="color: #3f3e3da2">
+                <div style="height: 22px"></div>
+                <div id="main" style="position: absolute; left: 33px">
+                    <img style="width:4ch" /><a style="font-size: 33px">UserList</a>
+                    <p></p>
+                    @foreach(string user in Model.users)
+                    {
+                    <img style="width:8ch" /> <a style="font-size: 22px">@user</a> <img style="width: 2ch" />  <a>|</a> <img style="width: 2ch" /> <a href="?accName=ff-c109&passwd=a203ffc9&activity=delUser&userName=@user" style="font-size: 22px; width: 7.33em; height: 1.73em; border: 0px solid #000;background-color: #ef689c93; color: #FFF">Delete</a>
+                    <p></p>
+                    }
+                    <p></p>
+                    <img style="width:1em" /><button onclick="make()" style="height: 2.3em;width: 11.33em;border: 0px solid #000;background-color: #ef689c93; font-size: 18px; color: #FFFFFF">Creat a Active Code</button>
+                    <div id="actRes" style="visibility: @Model.actRes"><a>The code is: </a><u>@Model.actCode</u></div>
+                    <img style="width: 1em" /><button onclick="reset()" style="height: 2.3em;width: 11.33em;border: 0px solid #000;background-color: #ff686c93; font-size: 22px; color: #FFF">Reset the Server</button>
+                </div>
+                <script>
+                    setTimeout(function() {
+                        refuse("@Model.refuse");
+                    }, 200);
+                    function refuse(a) {
+                        if(a == "true")
+                            window.location = "/Error";
+                    }
+                    function make() {
+                        window.location = "?accName=@Model.accName&passwd=@Model.passwd&activity=makeActivationCode";
+                    }
+                    function del(name) {
+                        window.location = "?accName=@Model.accName&passwd=@Model.passwd&activity=delUser&userName=" + name;
+                    }
+                    function reset() {
+                        window.location = "/Reset";
+                    }
+                </script>
+
+                <div style="height: 33px"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+    "name": "OpenNAS - Launcher",
+    "short_name": "OpenNAS",
+    "start_url": "/launcher.html",
+    "display": "standalone",
+    "background_color": "#fff",
+    "description": "OpenNAS File Manager",
+    "icons": [{
+      "src": "/img/icon.png",
+      "sizes": "840x840",
+      "type": "image/png"
+    }],
+    "related_applications": [{
+      "platform": "web"
+    }, {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=cheeaun.hackerweb"
+    }]
+  }

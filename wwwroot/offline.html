@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Offline - OpenNAS</title>
+    <link rel="manifest" href="/js/manifest.json">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <!--<link rel="manifest" href="~/manifest.webmanifest">-->
+    <script src="js/localforage.min.js"></script>
+    <style>
+        body {
+            color: #333;
+        }
+        .lightBlack {
+            color: #444;
+        }
+        .alpharedbackground {
+            background-color: #E2919B93
+        }
+        .alphalightbackground {
+            background-color: #FFFFFF70
+        }
+    </style>
+    <script>
+        function imageToDataURL(path, callback) {
+            var img = new Image();
+            img.src = path;
+            img.onload = function() {
+                var canvas = document.createElement("CANVAS");
+                var ctx = canvas.getContext('2d');
+                var data;
+                canvas.height = this.height;
+                canvas.width = this.width;
+                ctx.drawImage(this, 0, 0);
+                data = canvas.toDataURL("image/png", 1);
+                callback(data);
+            }
+        }
+        function dataURLtoBlob(dataurl) {
+            var arr = dataurl.split(','),
+                mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]),
+                n = bstr.length,
+                u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new Blob([u8arr], { type: mime });
+        }
+        localforage.getItem("background-Small", function(err, image) {
+            if(image != null) {
+                document.getElementById("background").poster = image;
+                localforage.getItem("background", function(err, value) {
+                    if(value == null) {
+                        document.getElementById("background").src = "/img/dynamicBackground.mp4";
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("GET", "/img/dynamicBackground.mp4");
+                        xhr.onload = () => {
+                            var arraybuffer = xhr.response;
+                            localforage.setItem("background", arraybuffer);
+                        };
+                        xhr.responseType = "arraybuffer";
+                        xhr.send(null);
+                    }
+                    else {
+                        //console.log(image);
+                        var objURL = URL.createObjectURL(new Blob([value]));
+                        //console.log(objURL);
+                        document.getElementById("background").src = objURL;
+                    }
+                });
+            }
+            else {
+                //localforage.setItem("background", "/img/dynamicBackground.mp4");
+                document.getElementById("background").src = "/img/dynamicBackground.mp4";
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "/img/dynamicBackground.mp4");
+                xhr.onload = () => {
+                    var arraybuffer = xhr.response;
+                    localforage.setItem("background", arraybuffer);
+                };
+                xhr.responseType = "arraybuffer";
+                xhr.send(null);
+                /*var bg = new Image();
+                bg.src="/img/background.png";
+                /*if(bg.complete) {
+                    var canvas = document.createElement("CANVAS");
+                    var ctx = canvas.getContext('2d');
+                    var dataURL;
+                    canvas.height = bg
+                }*//*
+                bg.onload = function() {
+                    var canvas = document.createElement("CANVAS");
+                    var ctx = canvas.getContext('2d');
+                    var data;
+                    canvas.height = this.height;
+                    canvas.width = this.width;
+                    ctx.drawImage(this, 0, 0);
+                    data = canvas.toDataURL("image/png", 0.8);
+                    //data = canvas.toBlob("image/png", 0.8);
+                    localforage.setItem("background", data); 
+                    localforage.setItem("cache", true);
+                }*/
+                imageToDataURL("/img/background-Small.png", function(res) {
+                    localforage.setItem("background-Small", res);
+                    console.log(res);
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <div style="width: 0px; height: 0px;">
+                <video id="background" src="about:blank" poster="about:blank" style="position: fixed; left: 0px; top: 0px; z-index: -2" muted="muted" autoplay="autoplay" loop="loop"></video>
+                <div id="wa" style="position: fixed; left: 0px; top: 0px; z-index: -1; background-color: #FFFFFF23; width: 100vw; height: 100vh"></div>
+            </div>
+
+            <script>
+                if (window.innerWidth / window.innerHeight >= (16/9)) {
+                    //$(img).animate({ width: 100vw })
+                    //filter: contrast(120%) blur(13px);
+                    document.getElementById("background").style.width = "110vw";
+                    document.getElementById("background").style.left = "-5vw";
+                }
+                else {
+                    //$(img).animate({ height: 100vh })
+                    document.getElementById("background").style.height = "110vh";
+                    document.getElementById("background").style.top = "-5vh";
+                    //$("#background").animate({ left: '-120px' });
+                    document.getElementById("background").style.left = "-300px";
+                }
+                document.getElementById("background").style.filter = "contrast(102%) blur(0px)";
+                //document.getElementById("wa").style.filter = "contrast(120%) blur(13px)";
+            </script>
+            <div style="height: 20px"></div>
+            <div style="color: #3f3e3da2" class="alphalightbackground">
+                <div style="height: 22px"></div>
+                <center><h1>You Are Offline Now</h1></center>
+                <div style="height: 33px"></div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - OpenNAS - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <script src="/js/upup.min.js"></script>
+    <script>
+        UpUp.start({
+            'content-url': '/offline.html'
+        });
+    </script>
+</body>
+</html>

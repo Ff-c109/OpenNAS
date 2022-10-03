@@ -1,0 +1,270 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - OpenNAS</title>
+    <link rel="manifest" href="/js/manifest.json">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <!--<link rel="manifest" href="~/manifest.webmanifest">-->
+    <script src="js/localforage.min.js"></script>
+    <style>
+        body {
+            color: #333;
+        }
+        .lightBlack {
+            color: #444;
+        }
+        .alpharedbackground {
+            background-color: #E2919B93
+        }
+        .alphalightbackground {
+            background-color: #FFFFFF70
+        }
+    </style>
+    <script>
+        function imageToDataURL(path, callback) {
+            var img = new Image();
+            img.src = path;
+            img.onload = function() {
+                var canvas = document.createElement("CANVAS");
+                var ctx = canvas.getContext('2d');
+                var data;
+                canvas.height = this.height;
+                canvas.width = this.width;
+                ctx.drawImage(this, 0, 0);
+                data = canvas.toDataURL("image/png", 1);
+                callback(data);
+            }
+        }
+        function dataURLtoBlob(dataurl) {
+            var arr = dataurl.split(','),
+                mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]),
+                n = bstr.length,
+                u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new Blob([u8arr], { type: mime });
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="bg">
+            <div class="drag">
+                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light alpharedbackground border-bottom box-shadow mb-3">
+                    <div class="container">
+                        <a class="navbar-brand" asp-area="" asp-page="/Index">OpenNAS</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                            <ul class="navbar-nav flex-grow-1">
+                                <!--<li class="nav-item">
+                                    <a class="nav-link text-dark" onclick="fsc()">Full Screen</a>
+                                </li>-->
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                                </li>
+                                <!--<li class="nav-item"><img style="width: 1ch" /><a class="nav-link text-dark">|</a><img style="width: 1ch" /></li>-->
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/SignIn">Sign In</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/SignUp">Sign Up</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+             </div>
+        </div>
+    </header>
+    <style>
+        .alphalightbackground {
+            filter: contrast(100%) blur(0px);
+        }
+    </style>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <div style="width: 0px; height: 0px;">
+                <video id="background" src="about:blank" poster="about:blank" style="position: fixed; left: 0px; top: 0px; z-index: -2" muted="muted" autoplay="autoplay" loop="loop"></video>
+                <div id="wa" style="position: fixed; left: 0px; top: 0px; z-index: -1; background-color: #FFFFFF23; width: 100vw; height: 100vh"></div>
+            </div>
+            <div style="height: 20px"></div>
+            <div id="lightbg" style="color: #3f3e3da2" class="alphalightbackground">
+                <div style="height: 22px"></div>
+                @RenderBody()
+                <div style="height: 33px"></div>
+            </div>
+
+            <script>
+                var first = true;
+                if (window.innerWidth / window.innerHeight >= (16/9)) {
+                    //$(img).animate({ width: 100vw })
+                    //filter: contrast(120%) blur(13px);
+                    document.getElementById("background").style.width = "125vw";
+                    document.getElementById("background").style.left = "-5vw";
+                }
+                else {
+                    //$(img).animate({ height: 100vh })
+                    document.getElementById("background").style.height = "125vh";
+                    document.getElementById("background").style.top = "-5vh";
+                    //$("#background").animate({ left: '-120px' });
+                    document.getElementById("background").style.left = "-300px";
+                }
+                document.getElementById("background").style.filter = "contrast(125%) blur(0px)";
+                //document.getElementById("lightbg").style.filter == "contrast(100%) blur(0px)";
+                //document.getElementById("wa").style.filter = "contrast(120%) blur(13px)";
+                document.getElementById("lightbg").onmouseover = () => {
+                    var setbg = (i) => {
+                        if(i > 100)
+                            return ;
+                        document.getElementById("background").style.filter = "blur(" + parseInt(i / 10).toString() + "px) contrast(135%) brightness(75%) saturate(125%)";
+                        document.getElementById("lightbg").style.filter = "contrast(" + parseInt(200 - i).toString() + "%) blur(" + parseInt(10 - i/10).toString() + "px)";
+                        setTimeout(() => {setbg(i + 10)}, 50);
+                    };
+                    if(document.getElementById("lightbg").style.filter != "contrast(100%) blur(0px)")
+                        setbg(10);
+                };
+                document.getElementById("lightbg").onmouseleave = () => {
+                    var setbg = (i) => {
+                        if(i > 100)
+                            return ;
+                        document.getElementById("background").style.filter = "blur(" + parseInt(10 - i/10).toString() + "px) contrast(135%) brightness(75%) saturate(125%)";
+                        document.getElementById("lightbg").style.filter = "contrast(" + parseInt(100 + i).toString() + "%) blur(" + parseInt(i / 10).toString() + "px)";
+                        setTimeout(() => {setbg(i + 10)}, 50);
+                    };
+                    if(document.getElementById("lightbg").style.filter != "constrast(200%) blur(10px)")
+                        setbg(10);
+                };
+            </script>
+        </main>
+    </div>
+
+    <script>
+        localforage.getItem("bgsml", function(err, image) {
+            if(image != null) {
+                var bgsml = URL.createObjectURL(new Blob([image]));
+                document.getElementById("background").poster = bgsml;
+                localforage.getItem("background", function(err, value) {
+                    if(value == null) {
+                        console.log("Creating Cache...");
+                        document.getElementById("Log").innerHTML = "Creating Cache...";
+                        document.getElementById("background").src = "/img/dynamicBackground.mp4";
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("GET", "/img/dynamicBackground.mp4");
+                        xhr.onload = () => {
+                            var arraybuffer = xhr.response;
+                            localforage.setItem("background", arraybuffer);
+                            console.log("Cached.");
+                            document.getElementById("Log").innerHTML = "Cached.";
+                        };
+                        xhr.onprogress = (e) => {
+                            pgrsd.style.width=parseInt(e.loaded / e.total * 1000000) / 100000 + "em";
+                        };
+                        xhr.responseType = "arraybuffer";
+                        xhr.send(null);
+                    }
+                    else {
+                        var pgrs = document.getElementById('pgrs');
+                        var pgrsd = document.getElementById('pgrsd');
+                        console.log("Reading Video from cache...");
+                        pgrs.style.visibility="hidden";
+                        pgrsd.style.visibility="hidden";
+                        document.getElementById("Log").innerHTML = "Reading Video from cache.";
+                        //console.log(image);
+                        var objURL = URL.createObjectURL(new Blob([value]));
+                        //console.log(objURL);
+                        document.getElementById("background").src = objURL;
+                    }
+                });
+            }
+            else {
+                console.log("Creating Cache...");
+                document.getElementById("Log").innerHTML = "Creating Cache...";
+                document.getElementById("background").src = "/img/dynamicBackground.mp4";
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "/img/dynamicBackground.mp4");
+                xhr.onload = () => {
+                    var arraybuffer = xhr.response;
+                    localforage.setItem("background", arraybuffer);
+                    console.log("Cached.");
+                    document.getElementById("Log").innerHTML = "Cached.";
+                };
+                var pgrs = document.getElementById('pgrs');
+                var pgrsd = document.getElementById('pgrsd');
+                xhr.onprogress = (e) => {
+                    //document.getElementById('pgrs').innerHTML = parseInt(parseInt(e.loaded.toString()) / parseInt(e.total.toString()) * 1000000) / 1000 + '/' + "1000.000";
+                    
+                    pgrsd.style.width=parseInt(e.loaded / e.total * 1000000) / 100000 + "em";
+                };
+                xhr.responseType = "arraybuffer";
+                xhr.send(null);
+                /*var bg = new Image();
+                bg.src="/img/background.png";
+                /*if(bg.complete) {
+                    var canvas = document.createElement("CANVAS");
+                    var ctx = canvas.getContext('2d');
+                    var dataURL;
+                    canvas.height = bg
+                }*//*
+                bg.onload = function() {
+                    var canvas = document.createElement("CANVAS");
+                    var ctx = canvas.getContext('2d');
+                    var data;
+                    canvas.height = this.height;
+                    canvas.width = this.width;
+                    ctx.drawImage(this, 0, 0);
+                    data = canvas.toDataURL("image/png", 0.8);
+                    //data = canvas.toBlob("image/png", 0.8);
+                    localforage.setItem("background", data); 
+                    localforage.setItem("cache", true);
+                }*/
+                document.getElementById("Log").innerHTML = "Creating Cache...";
+                document.getElementById("background").src = "/img/dynamicBackground.mp4";
+                var cover = new XMLHttpRequest();
+                cover.open("GET", "/img/background.png");
+                cover.onload = () => {
+                    var arraybuffer = cover.response;
+                    console.log("Cover cached.");
+                    localforage.setItem("bgsml", arraybuffer);
+                };
+                cover.responseType = "arraybuffer";
+                cover.send(null);
+            }
+        });
+    </script>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - OpenNAS - <a asp-area="" asp-page="/Privacy">Privacy</a> <a id="Log"></a>
+            <img style="width: 1em"><button id="pgrs"><button id="pgrsd"></button></button>
+        </div>
+    </footer>
+
+    <script>
+        function fsc() {
+            document.documentElement.requestFullscreen();
+        }
+        var pgrs = document.getElementById('pgrs');
+        var pgrsd = document.getElementById('pgrsd');
+        pgrs.style.width="10em";
+        pgrs.style.height="1.3em";
+        pgrs.style.border="1px solid #000";
+        pgrsd.style.position="relative";
+        pgrsd.style.left="-10em";
+        pgrsd.style.height="1.3em";
+        pgrsd.style.backgroundColor="#66CCFF92";
+    </script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

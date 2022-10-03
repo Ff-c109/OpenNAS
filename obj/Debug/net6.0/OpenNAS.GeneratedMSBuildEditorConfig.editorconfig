@@ -1,0 +1,76 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = OpenNAS
+build_property.RootNamespace = OpenNAS
+build_property.ProjectDir = /media/ff-c109/DATA/source/repos/OpenNAS/OpenNAS/
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = /media/ff-c109/DATA/source/repos/OpenNAS/OpenNAS
+build_property._RazorSourceGeneratorDebug = 
+
+[/media/ff-c109/DATA/source/repos/OpenNAS/OpenNAS/Pages/Browse.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQnJvd3NlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/ff-c109/DATA/source/repos/OpenNAS/OpenNAS/Pages/CtrlPnl.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ3RybFBubC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/ff-c109/DATA/source/repos/OpenNAS/OpenNAS/Pages/Download.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRG93bmxvYWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/ff-c109/DATA/source/repos/OpenNAS/OpenNAS/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/ff-c109/DATA/source/repos/OpenNAS/OpenNAS/Pages/FirstUse.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRmlyc3RVc2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/ff-c109/DATA/source/repos/OpenNAS/OpenNAS/Pages/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/ff-c109/DATA/source/repos/OpenNAS/OpenNAS/Pages/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUHJpdmFjeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/ff-c109/DATA/source/repos/OpenNAS/OpenNAS/Pages/Reset.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUmVzZXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/ff-c109/DATA/source/repos/OpenNAS/OpenNAS/Pages/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/ff-c109/DATA/source/repos/OpenNAS/OpenNAS/Pages/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/ff-c109/DATA/source/repos/OpenNAS/OpenNAS/Pages/SignIn.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2lnbkluLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/ff-c109/DATA/source/repos/OpenNAS/OpenNAS/Pages/SignUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2lnblVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/ff-c109/DATA/source/repos/OpenNAS/OpenNAS/Pages/Upload.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvVXBsb2FkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/ff-c109/DATA/source/repos/OpenNAS/OpenNAS/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/ff-c109/DATA/source/repos/OpenNAS/OpenNAS/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

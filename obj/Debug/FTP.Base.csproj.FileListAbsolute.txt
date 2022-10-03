@@ -1,0 +1,16 @@
+E:\WorkCodeSpace\FTPDemo\FTP.Base\bin\Debug\FTP.Base.dll
+E:\WorkCodeSpace\FTPDemo\FTP.Base\bin\Debug\FTP.Base.pdb
+E:\WorkCodeSpace\FTPDemo\FTP.Base\obj\Debug\FTP.Base.dll
+E:\WorkCodeSpace\FTPDemo\FTP.Base\obj\Debug\FTP.Base.pdb
+E:\WorkCodeSpace\FTPDemo\FTP.Base\obj\Debug\FTP.Base.csprojResolveAssemblyReference.cache
+E:\WorkCodeSpace\FTPDemo\FTP.Base\bin\Debug\FTP.Model.dll
+E:\WorkCodeSpace\FTPDemo\FTP.Base\bin\Debug\FTP.Model.pdb
+C:\Users\xjy20\Downloads\FTPDemo\FTP.Base\bin\Debug\FTP.Base.dll
+C:\Users\xjy20\Downloads\FTPDemo\FTP.Base\bin\Debug\FTP.Base.pdb
+C:\Users\xjy20\Downloads\FTPDemo\FTP.Base\bin\Debug\FTP.Model.dll
+C:\Users\xjy20\Downloads\FTPDemo\FTP.Base\bin\Debug\FTP.Model.pdb
+C:\Users\xjy20\Downloads\FTPDemo\FTP.Base\obj\Debug\FTP.Base.csproj.AssemblyReference.cache
+C:\Users\xjy20\Downloads\FTPDemo\FTP.Base\obj\Debug\FTP.Base.csproj.CoreCompileInputs.cache
+C:\Users\xjy20\Downloads\FTPDemo\FTP.Base\obj\Debug\FTP.Base.csproj.CopyComplete
+C:\Users\xjy20\Downloads\FTPDemo\FTP.Base\obj\Debug\FTP.Base.dll
+C:\Users\xjy20\Downloads\FTPDemo\FTP.Base\obj\Debug\FTP.Base.pdb

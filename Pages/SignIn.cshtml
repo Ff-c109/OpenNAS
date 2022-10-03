@@ -1,0 +1,25 @@
+﻿@page
+@model OpenNAS.Pages.SignInModel
+@{
+    ViewData["Title"] = "Sign In";
+}
+
+<script>
+    function back() {
+        var accData = "/?accName=" + document.getElementById("accNameInput").value + "&passwd=" + document.getElementById("passwdInput").value;
+        localforage.setItem("acc", accData);
+        setTimeout(window.location = accData, 200);
+    }
+</script>
+
+<div id="main">
+    <center><h1>Welcome to use OpenNAS</h1></center>
+    <div style="height: 18vh; width: 10px"></div>
+    <div id="p1">
+        <img style="width: 8ch" /><a style="font-size: 18px">Account Name: </a><img style="width: 3ch" /><input id="accNameInput" type="Text" style="height: 2em; width: 30ch; background-color: #ef689c70" />
+        <div style="height: 1em"></div>
+        <img style="width: 8ch" /><a style="font-size: 18px">Password: </a><img style="width: 8ch" /><input id="passwdInput" type="password" style="height: 2em; width: 30ch; background-color: #ef689c70" />
+        <div style="height: 6em"></div>
+        <img style="width: 4ch" /><button onclick="back()" style="height: 2.3em;width: 7.33em;border: 0px solid #000;background-color: #ef689c93; font-size: 22px; color: #FFFFFF">Sign In</button>
+    </div>
+</div>

@@ -1,0 +1,126 @@
+﻿@page
+@model OpenNAS.Pages.SignUpModel
+@{
+    ViewData["Title"] = "Sign Up";
+}
+
+<script>
+    setTimeout(function() {
+        if("@Model.activeInformation" == "AC") {
+            document.getElementById("p1").style.visibility = "hidden";
+            document.getElementById("p1").style.height = "0px";
+            document.getElementById("p6").style.visibility = "visible";
+            document.getElementById("p6").style.height = "auto";
+        }
+        else if("@Model.activeInformation" == "ER") {
+            document.getElementById("p1").style.visibility = "hidden";
+            document.getElementById("p1").style.height = "0px";
+            document.getElementById("p5").style.visibility = "visible";
+            document.getElementById("p5").style.height = "auto";
+        }
+    }, 200);
+    function next() {
+        document.getElementById("p1").style.visibility = "hidden";
+        document.getElementById("p1").style.height = "0px";
+        document.getElementById("p2").style.visibility = "visible";
+        document.getElementById("p2").style.height = "auto";
+    }
+    function next1() {
+        /**
+         * document.getElementById("p2").style.visibility = "hidden";
+        document.getElementById("p2").style.height = "0px";
+        document.getElementById("p3").style.visibility = "visible";
+        document.getElementById("p3").style.height = "0px";
+         */
+        var accName = document.getElementById("accNameInput").value;
+        var passwd = document.getElementById("passwdInput").value;
+        var passwd1 = document.getElementById("passwdInput1").value;
+        if(passwd == passwd1) {
+            document.getElementById("p2").style.visibility = "hidden";
+            document.getElementById("p2").style.height = "0px";
+            document.getElementById("p3").style.visibility = "visible";
+            document.getElementById("p3").style.height = "auto";
+            setTimeout(function() {
+                document.getElementById("accName").innerHTML = accName;
+                document.getElementById("passwd").innerHTML = passwd;
+                document.getElementById("OK").style.visibility = "visible";
+            }, 700);
+        }
+        else {
+            document.getElementById("p2").style.visibility = "hidden";
+            document.getElementById("p2").style.height = "0px";
+            document.getElementById("p4").style.visibility = "visible";
+            document.getElementById("p4").style.height = "auto";
+        }
+    }
+    function ref() {
+        setTimeout(location.reload(), 500);
+    }
+    function finish() {
+        setTimeout(function() {
+            window.location = "?accName=" + document.getElementById("accName").innerHTML
+                + "&passwd=" + document.getElementById("passwd").innerHTML
+                + "&ActivationCode=" + document.getElementById("ActivationCodeInput").value;
+        }, 500);
+    }
+    function exit() {
+        setTimeout(window.location = "/", 500);
+    }
+    function reTry() {
+        setTimeout(function() {
+            window.location = "?action=retry";
+        }, 500);
+    }
+</script>
+
+<div id="main">
+    <center><h1>Registration Wizard</h1></center>
+    <div style="height: 18vh; width: 10px"></div>
+    <div id="p1">
+        <center><h2>Create a Account</h2></center>
+        <div style="height: 1em; width: 10px"></div>
+        <center><img style="width: 2ch" /><a style="font-size: 18px">Account Name: </a><img style="width: 1ch" /><input id="accNameInput" type="Text" style="height: 2em; width: 30ch; background-color: #ef689c70" /></center>
+        <div style="height: 24vh; width: 10px"></div>
+        <center><button onclick="next()" style="height: 2.3em;width: 7.33em;border: 0px solid #000;background-color: #ef689c93; font-size: 22px; color: #FFFFFF">Next</button></center>
+    </div>
+    <div id="p2" style="visibility: hidden; height: 0px">
+        <center><h2>Password</h2></center>
+        <div style="height: 1em; width: 10px"></div>
+        <center><img style="width: 2ch" /><a style="font-size: 18px">Passwd: </a><img style="width: 1ch" /><input id="passwdInput" type="password" style="height: 2em; width: 30ch; background-color: #ef689c70" /></center>
+        <div style="height: 1em"></div>
+        <center><img style="width: 2ch" /><a style="font-size: 18px">Input again: </a><img style="width: 1ch" /><input id="passwdInput1" type="password" style="height: 2em; width: 30ch; background-color: #ef689c70" /></center>
+        <div style="height: 20vh"></div>
+        <center><button onclick="next1()" style="height: 2.3em;width: 7.33em;border: 0px solid #000;background-color: #ef689c93; font-size: 22px; color: #FFFFFF">Next</button></center>
+    </div>
+    <div id="p3" style="visibility: hidden; height: 0px">
+        <img style="width: 4ch"> <a style="font-size: 33px">Almost Done</a>
+        <div style="height: 2em"></div>
+        <img style="width: 8ch" /> <b style="font-size: 18px">Account Name</b><img style="width: 1ch" /><a style="font-size: 18px" id="accName"></a>
+        <p></p>
+        <div style="height: 1em"></div>
+        <img style="width: 8ch" /> <b style="font-size: 18px">Password</b><img style="width: 1ch" /><a style="font-size: 18px" id="passwd"></a>
+        <p></p>
+        <div style="height: 2em"></div>
+        <img style="width: 8ch" /> <b style="font-size: 18px">Activation Code: </b><img style="width: 1ch" /><input id="ActivationCodeInput" type="Text" style="height: 2em; width: 30ch; background-color: #ef689c70" />
+        <div style="height: 6em"></div>
+        <img style="width: 4ch" /><button onclick="finish()" id="OK" style="height: 2.3em;width: 7.33em;border: 0px solid #000;background-color: #ef689c93; font-size: 22px; color: #FFFFFF; visibility: hidden">OK</button>
+    </div>
+    <div id="p4" style="visibility: hidden; height: 0px">
+        <img style="width: 4ch"> <a style="font-size: 33px">Error, Please Try Again</a>
+        <div style="height: 2em"></div>
+        <div style="height: 6em"></div>
+        <img style="width: 4ch" /><button onclick="ref()" style="height: 2.3em;width: 7.33em;border: 0px solid #000;background-color: #ef689c93; font-size: 22px; color: #FFFFFF">Retry</button>
+    </div>
+    <div id="p5" style="visibility: hidden; height: 0px">
+        <img style="width: 4ch"> <a style="font-size: 33px">Error, Activation failed</a>
+        <div style="height: 2em"></div>
+        <div style="height: 6em"></div>
+        <img style="width: 4ch" /><button onclicqk="reTry()" style="height: 2.3em;width: 7.33em;border: 0px solid #000;background-color: #ef689c93; font-size: 22px; color: #FFFFFF">Retry</button>
+    </div>
+    <div id="p6" style="visibility: hidden; height: 0px">
+        <img style="width: 4ch"> <a style="font-size: 33px">Successful</a>
+        <div style="height: 2em"></div>
+        <div style="height:  6em"></div>
+        <img style="width: 4ch" /><button onclick="exit()" style="height: 2.3em;width: 7.33em;border: 0px solid #000;background-color: #ef689c93; font-size: 22px; color: #FFFFFF">Exit</button>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+﻿@page
+@model UploadModel
+@{
+    ViewData["Title"] = "Upload";
+    Layout = null;
+}
+
+<script>
+    function sf() {
+        document.getElementById("Upload").click();
+    }
+    function sbc() {
+        document.getElementById("sb").click();
+    }
+    function rsc() {
+        document.getElementById("rs").click();
+        document.getElementById("fileName").innerHTML = "";
+    }
+</script>
+
+<form method="post" enctype="multipart/form-data" style="visibility: hidden">
+    <p>File: <input type="file" asp-for="Upload" onchange='document.getElementById("fileName").innerHTML = document.getElementById("Upload").files[0].name'></p>
+    <p>
+        <input id="sb" type="submit">
+        <input id="rs" type="reset">
+    </p>
+</form>
+<div style="height: 3.7em">
+    <img style="width:1em">
+    <button id="fileName" style="position: absolute; height: 2.3em;width: 18em;border: 1px solid #000;background-color: #60D0FF92; font-size: 18px; color: #FFFFFF"></button>
+    <img style="width:1em">
+    <button onclick="sf()" style="position: absolute; left: 20.2em; height: 2.3em;width: 7em;border: 0px solid #000;background-color: #ef689c93; font-size: 18px; color: #FFFFFF">Select A File</button>
+</div>
+
+<img style="width:1em">
+<button onclick="sbc()" style="height: 2.3em;width: 7em;border: 0px solid #000;background-color: #ef689c93; font-size: 18px; color: #FFFFFF">Submit</button>
+<img style="width:0.5em">
+<button onclick="rsc()" style="height: 2.3em;width: 7em;border: 0px solid #000;background-color: #ef689c93; font-size: 18px; color: #FFFFFF">Reset</button>
+
+<p></p>
+<p style="font-size: 18px">State: @Model.State</p>

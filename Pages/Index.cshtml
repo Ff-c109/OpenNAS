@@ -1,0 +1,64 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<script src="/js/upup.min.js"></script>
+
+<script>
+    function changeURLStatic(name, value) {
+        var url = location.href;
+        var reg = eval('/([\?|&]'+name+'=)[^&]*/gi');
+        value = value.toString().replace(/(^\s*)|(\s*$)/g,"");  //移除首尾空格
+        if(!value){
+            var url2 = url.replace(reg , '');  //正则替换
+        }else{
+            if(url.match(reg)){
+                var url2 = url.replace(reg , '$1' + value);  //正则替换
+            }else{
+                var url2 = url + (url.indexOf('?') > -1 ? '&' : '?') + name + '=' +value;  //没有参数添加参数
+            }
+        }
+        history.replaceState(null,null, url2);  //替换地址栏
+    }
+    setTimeout(function() {
+        if("@Model.redirect" == "YES") {
+            document.getElementById("Browser").src = "/Browse?accName=" + "@Model.accName" + "&passwd=" + "@Model.passwd";
+            document.getElementById("Browser").style.height = "70vh";
+            document.getElementById("Browser").style.visibility = "visible";
+        }
+    }, 200);
+    setTimeout(function() {
+        if((window.location + "").split('#')[1] != "autolog")
+            localforage.getItem("acc", (err, value) => {
+                if(value == null)
+                    window.location = "/SignIn";
+                else
+                    window.location = value + "#autolog";
+            });
+        changeURLStatic("accName", "deafualt");
+        changeURLStatic("passwd", "******");
+    }, 500);
+    setTimeout(function() {
+        if(document.getElementById("CtrlPnl").style.visibility == "hidden") {
+            document.getElementById("CtrlPnl").style.height = "0px";
+        }
+    }, 200);
+</script>
+
+<div class="text-center">
+    <h1 class="display-4" style="color: hsl(320deg 68% 44%)">@Model.Message</h1>
+    <div style="height: 6em"></div>
+    <center><h3 style="@Model.ConfigurationButton"><a href="FirstUse">Start Configuration</a></h3></center>
+    <div id="CtrlPnl" style="width: inherit; visibility: @Model.visibility">
+        <iframe frameborder="0" style="background-color: #FFFFFF00; width: 100%; height: 63vh" src="/CtrlPnl?accName=@Model.accName&passwd=@Model.passwd"></iframe>
+    </div>
+    <iframe id="Browser" frameborder="0" style="background-color: #FFFFFF00; width: 100%; visibility: hidden; height: 0px"></iframe>
+</div>
+
+<script>
+    UpUp.start({
+        'content-url': '/offline.html'
+    });
+</script>

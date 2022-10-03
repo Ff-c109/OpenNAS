@@ -1,0 +1,50 @@
+﻿@page
+@model ResetModel
+@{
+    ViewData["Title"] = "Reset";
+}
+
+<h1 class="text-danger">This Will Remove All the Data Which was Storged in This Site</h1>
+<h2 class="text-danger">Are you sure about that</h2>
+
+<img style="width: 1em" /><button onclick="yes()" style="height: 2.3em;width: 11.33em;border: 0px solid #000;background-color: #ff686c93; font-size: 22px; color: #FFF">Yes, Do it.</button>
+<img style="width: 1em" /><button onclick="no()" style="height: 2.3em;width: 11.33em;border: 0px solid #000;background-color: #ff686c93; font-size: 22px; color: #FFF">No</button>
+
+<div id="cf" style="visibility: hidden">
+    <p>Enter your passwd to continue</p>
+    <input id="pswd" type="password" />
+    <button onclick="pswdet()">OK</button>
+</div>
+
+<div id="ntc" style="visibility: hidden"> 
+    <p style="font-size: 18px">@Model.message</p>
+</div>
+
+<script>
+    function no() {
+        window.location = "/";
+    }
+    function yes() {
+        if(confirm("This may cause serious consequences,\n are you sure?")) {
+            if(confirm("Do you no that if you continue choose OK, \nYour data will lost forever.\nAnd it will happen after this question.")) {
+                window.location = "/Reset?do=admincf";
+            }
+            else {
+                window.location = "/";
+            }
+        }
+        else {
+            window.location = "/";
+        }
+    }
+    var url = window.location + "";
+    if(url.split('=')[1] == "admincf") {
+        document.getElementById("cf").style.visibility = "visible";
+    }
+    else if(url.split('?')[1].split('=')[0] == "passwd") {
+        document.getElementById("ntc").style.visibility = "visible";
+    }
+    function pswdet() {
+        window.location = "/Reset?passwd=" + document.getElementById("pswd").value;
+    }
+</script>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenNAS</title>
+    <script>
+        function fsc() {
+            var pg = document.createElement("iframe");
+            pg.width = window.innerWidth;
+            pg.height = window.innerHeight;
+            pg.src = "/";
+            document.getElementById('a').innerHTML = " ";
+            pg.style.left = "0";
+            pg.style.top = "0";
+            pg.style.position = "fixed";
+            document.getElementById('a').appendChild(pg);
+            pg.requestFullscreen();
+        }
+    </script>
+    <link rel="manifest" href="/js/manifest.json">
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/site.css" />
+    <!--<link rel="manifest" href="~/manifest.webmanifest">-->
+    <script src="js/localforage.min.js"></script>
+    <style>
+        body {
+            color: #333;
+        }
+        .lightBlack {
+            color: #444;
+        }
+        .alpharedbackground {
+            background-color: #E2919B93
+        }
+        .alphalightbackground {
+            background-color: #FFFFFF70
+        }
+    </style>
+    <script>
+        function imageToDataURL(path, callback) {
+            var img = new Image();
+            img.src = path;
+            img.onload = function() {
+                var canvas = document.createElement("CANVAS");
+                var ctx = canvas.getContext('2d');
+                var data;
+                canvas.height = this.height;
+                canvas.width = this.width;
+                ctx.drawImage(this, 0, 0);
+                data = canvas.toDataURL("image/png", 1);
+                callback(data);
+            }
+        }
+        function dataURLtoBlob(dataurl) {
+            var arr = dataurl.split(','),
+                mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]),
+                n = bstr.length,
+                u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new Blob([u8arr], { type: mime });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <div style="width: 0px; height: 0px;">
+                <video id="background" src="about:blank" poster="about:blank" style="position: fixed; left: 0px; top: 0px; z-index: -2" muted="muted" autoplay="autoplay" loop="loop"></video>
+                <div id="wa" style="position: fixed; left: 0px; top: 0px; z-index: -1; background-color: #FFFFFF23; width: 100vw; height: 100vh"></div>
+            </div>
+
+            <script>
+                if (window.innerWidth / window.innerHeight >= (16/9)) {
+                    //$(img).animate({ width: 100vw })
+                    //filter: contrast(120%) blur(13px);
+                    document.getElementById("background").style.width = "110vw";
+                    document.getElementById("background").style.left = "-5vw";
+                }
+                else {
+                    //$(img).animate({ height: 100vh })
+                    document.getElementById("background").style.height = "110vh";
+                    document.getElementById("background").style.top = "-5vh";
+                    //$("#background").animate({ left: '-120px' });
+                    document.getElementById("background").style.left = "-300px";
+                }
+                document.getElementById("background").style.filter = "contrast(102%) blur(0px)";
+                //document.getElementById("wa").style.filter = "contrast(120%) blur(13px)";
+            </script>
+            <div style="height: 20px"></div>
+            <div id="lightbg" style="color: #3f3e3da2" class="alphalightbackground">
+                <div style="height: 22px"></div>
+                <div id="a"></div>
+                <script>
+                    var button = document.createElement("p");
+                    button.innerHTML = "OpenNAS";
+                    button.style.fontSize = "33px";
+                    var tx = document.createElement("p");
+                    tx.innerHTML = "Tap Here to Start";
+                    tx.fontSize = "22px";
+                    var tc = document.createElement("center");
+                    tc.appendChild(button);
+                    tc.appendChild(tx);
+                    document.getElementById("a").appendChild(tc);
+                    document.getElementById("lightbg").onclick = () => fsc();
+                    document.getElementById("lightbg").style.cursor = "pointer";
+                </script>
+                <div style="height: 33px"></div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - OpenNAS - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script>
+        localforage.getItem("background", (err, data) => {
+            if(data == null)
+                document.getElementById("background").src = "/img/dynamicBackground.mp4";
+            else{
+                var objURL = URL.createObjectURL(new Blob([data]));
+                document.getElementById("background").src = objURL;
+            }
+        })
+    </script>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/site.js" asp-append-version="true"></script>
+    
+    <script src="/js/upup.min.js"></script>
+    <script>
+        UpUp.start({
+            'content-url': '/fw.html'
+        });
+    </script>
+</body>
+</html>
