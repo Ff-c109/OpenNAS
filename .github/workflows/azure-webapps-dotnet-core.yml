@@ -30,7 +30,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read, write
+  contents: write
 
 jobs:
   build:
