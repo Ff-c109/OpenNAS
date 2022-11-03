@@ -68,7 +68,7 @@ namespace OpenNAS
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseUrls("http://localhost:8080/").UseStartup<Startup>().UseKestrel(options =>
+                    webBuilder.UseUrls(File.ReadAllTexts("httpPort")).UseStartup<Startup>().UseKestrel(options =>
                     {
                         //控制中间件允许的上传文件大小为：不限制
                         options.Limits.MaxRequestBodySize = null;
